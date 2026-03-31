@@ -1,0 +1,215 @@
+\documentclass[a4paper, UKenglish, cleveref, autoref, thm-restate]{oasics-v2021}
+% Für OASIcs: Das Paket oasics-v2021 muss im Ordner liegen.
+% Die Optionen für Geometrie, Fonts und Spacing werden von der Klasse verwaltet.
+
+\bibliographystyle{plainurl}
+
+\title{Gamification in Programming Education: A Zelda-inspired RPG Approach for Reinforcing Foundational Programming Skills}
+
+\titlerunning{Gamification in Programming Education} % Kurztitel für den Header
+
+\author{Max Fritsche}{Duale Hochschule Sachsen - Staatliche Studienakademie Leipzig, Germany}{max.fritsche@beispiel.de}{https://orcid.org/0000-0000-0000-0000}{}% Mandatory: Middle brackets are for ORCID, last for funding
+
+\authorrunning{M. Fritsche} 
+
+\Copyright{Max Fritsche}
+
+\ccsdesc[500]{Social and professional topics~Computer science education}
+\ccsdesc[300]{Applied computing~Interactive learning environments}
+
+\keywords{Gamification, C Programming, Role-Playing Games, Automated Grading, Docker}
+
+\category{Regular Research Paper} % Oder entsprechende Konferenz-Kategorie
+
+\relatedversion{} % Link zur Vollversion (z.B. arXiv), falls vorhanden
+
+\supplementdetails{Software}{https://github.com/example/c-zelda-prototype} % Supplementary Material
+
+\begin{abstract}
+The acquisition of programming skills is a notoriously difficult process characterized by high cognitive load, complex abstraction requirements, and significant dropout rates in higher education. Traditional pedagogical approaches often struggle to bridge the gap between abstract syntax and the strategic problem-solving required in software engineering. This paper presents a comprehensive gamified solution: a 2D top-down Role-Playing Game (RPG) inspired by classical adventure games like "The Legend of Zelda," specifically designed to reinforce existing knowledge. We detail the integration of a secure, Docker-based automated code judge within a narrative-driven environment. Key features include a virtual economy, a social "company" system for collaboration, and a curriculum focused on the C programming language to deepen low-level understanding. The paper evaluates the technical robustness of the prototype and proposes an empirical framework to validate the hypothesis that this immersive approach significantly enhances learning productivity, persistence, and student motivation.
+\end{abstract}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Programming education is facing a global crisis of engagement. As software becomes the backbone of modern infrastructure, the demand for developers grows, yet introductory computer science (CS1) courses report failure rates as high as 30-50\%. The primary challenge lies not just in learning syntax, but in developing the strategic knowledge required to decompose complex problems and debug logic under pressure.
+
+Current educational models often rely on "frontal" instruction followed by isolated, context-free exercises. These methods lack the immediate, iterative feedback loops that modern learners require to stay motivated. This paper argues that Gamification, the application of game design elements to non-game contexts, can provide a solution by fostering a "Flow" state where the challenge of coding is matched by an immersive narrative and immediate rewards.
+
+\subsection{Challenges in Programming Education}
+As noted by Singh (2022) and Medeiros et al. (2019), beginners struggle with three distinct levels of knowledge:
+\begin{enumerate}
+    \item \textbf{Syntactic Knowledge:} The specific rules and grammar of the language (e.g., semicolons, brackets).
+    \item \textbf{Conceptual Knowledge:} Understanding abstract structures like loops, recursion, or pointers.
+    \item \textbf{Strategic Knowledge:} The ability to apply concepts to solve novel problems, plan algorithms, and systematically debug.
+\end{enumerate}
+
+\subsubsection{Cognitive and Subject-Specific Hurdles}
+Students frequently struggle with the step from conceptual knowledge to strategic application. While a student might understand what a "variable" is in isolation, they often fail to integrate multiple concepts into a functioning program. Syntax errors, which lead to frustrating "trial-and-error" loops, often overshadow the actual logic of the problem. Medeiros et al. (2019) emphasize that the high degree of abstraction, such as memory addresses and control structures, often lacks analogies in everyday life, making the initial learning curve exceptionally steep.
+
+\subsubsection{Behavioral and Emotional Factors}
+Beyond cognitive barriers, behavioral factors like self-efficacy and time management play a crucial role. Programming is often perceived as "inherently difficult," which leads to early demotivation. In large cohorts, individual support is limited, and students often feel abandoned when facing complex software setups or cryptic compiler errors. This lack of "psychological safety" inhibits exploration and experimentation.
+
+\subsection{Hypothesis of the Study}
+The central hypothesis of this work is: \textit{"The gamification of programming education can be successfully and effectively implemented in the form of a Zelda-like RPG to increase learning productivity and motivation."} To validate this, we developed a prototype that focuses on the reinforcement of existing skills through practical, narrative-embedded exercises.
+
+\section{Theoretical Foundations}
+\subsection{The Importance of Practical Exercise}
+Programming is a craft that requires active participation. According to the constructivist principle of "Learning by Doing," knowledge is constructed through experience. Iftikhar et al. (2022) state that "Learning to code is a skill that can only be developed by virtue of practice." Passive consumption of lectures or textbooks provides the vocabulary, but only the application in diverse scenarios builds actual competence.
+
+\subsection{Gamification as a Didactic Method}
+Gamification refers to the use of game-design elements in non-game contexts to increase user engagement (Smiderle et al., 2020). Unlike "Games for Learning," where the game is the primary focus, gamification adds a layer of motivation to the existing learning content.
+
+\subsubsection{Behaviorist Reinforcement}
+The core loop of a gamified system is inherently behaviorist. Based on B.F. Skinner’s theories (1958), behavior is shaped by its consequences. Immediate feedback, such as points or visual rewards, serves as a positive reinforcer. Our system provides this through an Online Code Judge that evaluates code in seconds, allowing students to learn from mistakes instantly rather than waiting days for manual grading.
+
+\subsubsection{Flow Theory and Scaffolding}
+Optimal learning occurs in the "Flow Zone," a state between boredom and anxiety. Mihaly Csíkszentmihályi describes this as a state of total immersion. In our RPG, "Scaffolding" is used to provide a ladder of increasing difficulty. Early quests are simple, building the student's confidence, while later quests challenge their strategic thinking.
+
+\subsubsection{Psychological Motivation Frameworks}
+We apply two major frameworks to ensure deep engagement:
+\begin{itemize}
+    \item \textbf{Self-Determination Theory (SDT):} Developed by Deci and Ryan (2016), this theory identifies three basic needs: \textit{Autonomy} (choice of quests), \textit{Competence} (mastering C code), and \textit{Relatedness} (social interaction in companies).
+    \item \textbf{ARCS Model:} Developed by Keller, this model focuses on Attention (narrative), Relevance (real-world code), Confidence (clear goals), and Satisfaction (rewards).
+\end{itemize}
+
+\subsection{Gamification vs. Traditional Methods}
+Traditional methods often suffer from high latency in feedback and a "punitive" error culture. Errors are seen as failure (grade deduction) rather than a learning opportunity. In a gamified RPG context, a "Game Over" or a failed test case is an invitation to retry. Studies by Lampropoulos et al. (2024) show that students in gamified courses achieved 14\% higher pass rates and 17\% higher average grades compared to traditional groups.
+
+\section{State of the Art: Analysis of Existing Platforms}
+A review of current tools reveals specific strengths and weaknesses in the context of higher education.
+
+\subsection{Block-based Environments}
+\textit{Scratch} is the industry standard for k-12. It avoids syntax errors through drag-and-drop blocks. While effective for teaching logic, it is often viewed as overly simplistic by university students. Furthermore, it abstracts away critical low-level concepts like memory management or data types, which are necessary for professional engineering.
+
+\subsection{Puzzle and Logic Games}
+Games like \textit{Lightbot} teach algorithmic thinking through spatial puzzles. They are highly engaging but stay too abstract. They lack the transition to text-based coding and authentic development workflows.
+
+\subsection{Code Adventure Games}
+\textit{CodeCombat} and \textit{CheckiO} use real code (Python/JS) to control characters in a story. While successful, these platforms often situate programming tasks primarily within a game environment, which may hinder the transfer of skills to local development environments. Our approach focuses on C to provide a "harder" academic challenge suitable for computer science majors.
+
+\subsection{Online Code Judges}
+\textit{LeetCode} and \textit{HackerRank} are high-performance tools for competitive programming. They offer immediate feedback but lack narrative context. For many beginners, these platforms feel like "dry" testing environments rather than motivating learning spaces.
+
+\section{Conceptual Design of the Learning Game}
+\subsection{Target Group and Learning Goals}
+The game targets second- or third-semester students who have already completed an introductory course. The goals are:
+\begin{itemize}
+    \item \textbf{Strategic Thinking:} Solving complex problems through algorithm design.
+    \item \textbf{Debugging Competence:} Systematic error identification and correction.
+    \item \textbf{Low-Level Understanding:} Mastery of pointers, structs, and manual memory management in C.
+\end{itemize}
+
+\subsection{The Zelda Metaphor and Movement}
+We chose a 2D top-down pixel-art style, inspired by \textit{The Legend of Zelda}. This aesthetic is nostalgic, accessible, and reduces cognitive load compared to complex 3D environments.
+\begin{itemize}
+    \item \textbf{Exploration:} Players move through a spatial world, making the learning path tangible.
+    \item \textbf{Interactions:} NPCs act as mentors or "Quest Givers."
+    \item \textbf{Contextualization:} Coding tasks are presented as "rebuilding broken bridges" or "deciphering ancient scrolls."
+\end{itemize}
+
+\subsection{Socio-Economic Ecosystem}
+The game features a meta-layer to ensure long-term persistence:
+\begin{itemize}
+    \item \textbf{Virtual Economy:} Students earn "Credits" for solving quests.
+    \item \textbf{Company System:} Students can form "Companies" (teams) to pool resources. This mimics real-world development teams and encourages peer-instruction.
+    \item \textbf{Properties:} Companies can buy "Offices" or "Labs" in the game world, providing a sense of ownership and social status.
+    \item \textbf{Social Feed:} A real-time activity feed shows achievements of friends, fostering a healthy sense of community.
+\end{itemize}
+
+\section{Technical Implementation}
+\subsection{System Architecture}
+The prototype utilizes a distributed, multi-tier architecture:
+\begin{enumerate}
+    \item \textbf{Unity Client:} A standalone 2D application handling world rendering, movement, and the integrated code editor.
+    \item \textbf{Node.js/Express Backend:} Manages the business logic, quest state, and economy.
+    \item \textbf{Supabase/PostgreSQL:} Provides persistent storage with Row-Level Security (RLS) to ensure data privacy.
+    \item \textbf{Docker Runner Service:} An isolated environment for safe code execution.
+\end{enumerate}
+
+\subsection{Backend and Security Design}
+The Node.js server acts as the central coordinator. For security, we utilize JSON Web Tokens (JWT) for authentication. Every interaction, from buying an item to starting a quest, is validated against the user's role and state. The database schema includes specialized tables for \texttt{users}, \texttt{quests}, \texttt{transactions}, \texttt{companies}, and \texttt{feed\_items}.
+
+\subsection{The Dockerized Code Runner}
+Executing arbitrary user code (especially in C) is a massive security risk. We implemented a "Sandbox" model:
+\begin{itemize}
+    \item \textbf{Isolation:} Each run occurs in a fresh Docker container with no network access.
+    \item \textbf{Resource Limits:} Containers are capped at 256MB RAM and 5 seconds of CPU time.
+    \item \textbf{Redis Queue:} To handle spikes in submissions, jobs are pushed to a Redis queue and processed by a pool of "pre-warmed" containers.
+    \item \textbf{Feedback Loop:} The runner captures \texttt{stdout}, \texttt{stderr}, and exit codes, sending them back to Unity via Server-Sent Events (SSE).
+\end{itemize}
+
+\subsection{Unity Movement and Animation System}
+Technical excellence in the frontend is key for immersion.
+\begin{itemize}
+    \item \textbf{Physics:} A \texttt{Rigidbody2D} based movement system ensures smooth collisions.
+    \item \textbf{Animations:} A state-machine-based Animation Controller handles transitions between "Idle" and "Walk" for four directions.
+    \item \textbf{Input:} We implemented the new Unity Input System to support both Keyboard and Gamepads.
+\end{itemize}
+
+\section{Technical Validation}
+\subsection{Code Judge Reliability}
+The judge was tested with several scenarios:
+\begin{itemize}
+    \item \textbf{Infinite Loops:} A program with \texttt{while(1);} was correctly terminated by the Docker engine after 5 seconds.
+    \item \textbf{Memory Abuse:} A program attempting to allocate 2GB of RAM was killed by the OOM-killer.
+    \item \textbf{Syntax Parsing:} Compiler errors from \texttt{gcc} were correctly passed through to the game terminal.
+\end{itemize}
+
+\subsection{Movement and Interaction Tests}
+We validated the interaction triggers. An NPC only opens the "Quest Menu" when the player is within a specific 2D trigger zone and presses the interaction key. This prevents overlapping UI elements and ensures a clean user experience.
+
+\section{Proposed Empirical Evaluation}
+To confirm the pedagogical impact, we propose a longitudinal study design.
+\subsection{Study Design}
+A cohort of 60 bachelor students will be split into an \textit{Experimental Group} (RPG) and a \textit{Control Group} (Traditional).
+\begin{itemize}
+    \item \textbf{Period:} 6 weeks of intervention.
+    \item \textbf{Topics:} Identical for both groups (Arrays, Pointers, Structs, Linked Lists).
+    \item \textbf{Metries:} Pre- and Post-tests for strategic knowledge, time-on-task, and completion rates.
+\end{itemize}
+
+\subsection{Didactic Importance of Quests}
+The quest structure provides narrative framing. Instead of "Write a function for Bubble Sort," the quest is "Organize the Kingdom's Library." This contextualization makes the problem-solving process feel meaningful. Qualitative feedback from previous studies (Flores et al., 2023) suggests that students describe such courses as "gripping" and "fesselnd."
+
+\section{Conclusion and Future Work}
+\subsection{Summary of Results}
+The "C-Zelda" prototype demonstrates that gamification can be successfully integrated into the rigorous context of university programming education. Technically, we have shown that Docker-based code execution is safe and responsive. Pedagogically, the combination of narrative exploration and immediate feedback addresses the primary pain points of beginners: demotivation and the struggle with abstraction.
+
+\subsection{Outlook and School Transfer}
+For future development, we envision:
+\begin{itemize}
+    \item \textbf{Multi-Language Support:} Expanding the runner to support Python and Rust.
+    \item \textbf{Collaborative Dungeons:} Multi-player puzzles where code from two players must be synchronized to succeed.
+    \item \textbf{School Integration:} Adapting the narrative for the German school system (Oberstufe) to promote "Informatische Grundbildung" in a playful yet serious way.
+\end{itemize}
+
+\newpage
+\section*{References}
+\begin{enumerate}
+    \item Medeiros, R. P., et al. (2019). A Systematic Literature Review on Teaching and Learning Introductory Programming in Higher Education. IEEE Transactions on Education.
+    \item Singh, S. (2022). Identifying Learning Challenges faced by Novice Computer Programming Students: An Action Research Approach.
+    \item Iftikhar, S., et al. (2022). Practice Promotes Learning: Analyzing Students' Acceptance of a Learning-by-Doing Online Programming Learning Tool.
+    \item Lampropoulos, G., \& Sidiropoulos, A. (2024). Impact of Gamification on Students' Learning Outcomes and Academic Performance: A Longitudinal Study. Education Sciences.
+    \item Skinner, B. F. (1958). Teaching machines. Science.
+    \item Csíkszentmihályi, M. (1990). Flow: The Psychology of Optimal Experience.
+    \item Zhan, Z., et al. (2022). The effectiveness of gamification in programming education: Evidence from a meta-analysis. Computers and Education: AI.
+    \item Deterding, S. (2016). Contextual Autonomy Support in Video Game Play: A Grounded Theory.
+\end{enumerate}
+
+\end{document}
+
+%%
+%% Bibliography
+%%
+% Erstelle eine .bib Datei namens 'references.bib' und binde sie hier ein.
+% Hier beispielhaft als integrierte Liste (plainurl Stil):
+\begin{thebibliography}{99}
+\bibitem{medeiros2019} R. P. Medeiros et al. A Systematic Literature Review on Teaching and Learning Introductory Programming in Higher Education. \emph{IEEE Transactions on Education}, 2019.
+\bibitem{csik1990} M. Csíkszentmihályi. \emph{Flow: The Psychology of Optimal Experience}. Harper \& Row, 1990.
+\bibitem{skinner1958} B. F. Skinner. Teaching machines. \emph{Science}, 128(3330):969--977, 1958.
+\end{thebibliography}
+
+\end{document}
