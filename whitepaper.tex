@@ -54,6 +54,8 @@ Students frequently struggle with the step from conceptual knowledge to strategi
 \subsubsection{Behavioral and Emotional Factors}
 Beyond cognitive barriers, behavioral factors like self-efficacy and time management play a crucial role. Programming is often perceived as "inherently difficult," which leads to early demotivation. In large cohorts, individual support is limited, and students often feel abandoned when facing complex software setups or cryptic compiler errors. This lack of "psychological safety" inhibits exploration and experimentation.
 
+At the classroom level, these barriers are amplified by feedback latency. In many traditional settings, learners only discover misconceptions after delayed grading cycles, which reduces opportunities for iterative correction and weakens persistence. Empirical work on programming pedagogy therefore emphasizes rapid, formative feedback and repeated low-stakes practice as central design requirements for CS learning environments \cite{marwan2022feedback,hattie2007power}.
+
 \subsection{Hypothesis of the Study}
 The central hypothesis of this work is: \textit{"The gamification of programming education can be successfully and effectively implemented in the form of a Zelda-like RPG to increase learning productivity and motivation."} To validate this, we developed a prototype that focuses on the reinforcement of existing skills through practical, narrative-embedded exercises.
 
@@ -61,39 +63,50 @@ The central hypothesis of this work is: \textit{"The gamification of programming
 \subsection{The Importance of Practical Exercise}
 Programming is a craft that requires active participation. According to the constructivist principle of "Learning by Doing," knowledge is constructed through experience. \cite{iftikhar2022practice} states that "Learning to code is a skill that can only be developed by virtue of practice." Passive consumption of lectures or textbooks provides the vocabulary, but only the application in diverse scenarios builds actual competence.
 
+Practice is particularly important for transitioning from conceptual to strategic knowledge. Students may know what loops, arrays, or pointers are, but still struggle to design complete solutions, test edge cases, and debug systematically \cite{medeiros2019review}. Structured repetition across varied tasks strengthens transfer: learners recognize recurring patterns and become faster at selecting and adapting solution strategies.
+
+In addition, repeated programming practice creates a measurable motivational effect when students can observe progress. Immediate verification of attempts, including failed attempts, supports a growth-oriented mindset and reduces the fear of making mistakes \cite{marwan2022feedback}. This is a key rationale behind integrating an automated judge into the game loop rather than using delayed manual assessment.
+
 \subsection{Gamification as a Didactic Method}
 Gamification refers to the use of game-design elements in non-game contexts to increase user engagement \cite{smiderle2020impact}. Unlike "Games for Learning," where the game is the primary focus, gamification adds a layer of motivation to the existing learning content.
 
+Systematic reviews show that gamification can improve participation, persistence, and perceived enjoyment, but effects depend strongly on instructional fit \cite{hamari2014does,dicheva2015gamification}. In programming education, the strongest benefits are reported when mechanics (e.g., quests, points, progression) are directly tied to meaningful coding actions instead of superficial reward collection \cite{zhan2022meta}.
+
 \subsubsection{Behaviorist Reinforcement}
-The core loop of a gamified system is inherently behaviorist. Based on B.F. Skinner’s theories (1958), behavior is shaped by its consequences. Immediate feedback, such as points or visual rewards, serves as a positive reinforcer. Our system provides this through an Online Code Judge that evaluates code in seconds, allowing students to learn from mistakes instantly rather than waiting days for manual grading.
+The core loop of a gamified system is inherently behaviorist. Based on B.F. Skinner’s theories, behavior is shaped by its consequences \cite{skinner1958teaching}. Immediate feedback, such as points or visual rewards, serves as a positive reinforcer. Our system provides this through an Online Code Judge that evaluates code in seconds, allowing students to learn from mistakes instantly rather than waiting days for manual grading.
 
 \subsubsection{Flow Theory and Scaffolding}
-Optimal learning occurs in the "Flow Zone," a state between boredom and anxiety. Mihaly Csíkszentmihályi describes this as a state of total immersion. In our RPG, "Scaffolding" is used to provide a ladder of increasing difficulty. Early quests are simple, building the student's confidence, while later quests challenge their strategic thinking.
+Optimal learning occurs in the "Flow Zone," a state between boredom and anxiety. In our RPG, scaffolding provides a ladder of increasing difficulty: early quests are simple and confidence-building, while later quests challenge algorithm design and debugging. Recent work in educational gamification confirms that balancing challenge with competence signals is essential for sustained engagement and reduced dropout \cite{li2023flow,challco2023gamiflow}.
 
 \subsubsection{Psychological Motivation Frameworks}
 We apply two major frameworks to ensure deep engagement:
 \begin{itemize}
-    \item \textbf{Self-Determination Theory (SDT):} Developed by Deci and Ryan (2016), this theory identifies three basic needs: \textit{Autonomy} (choice of quests), \textit{Competence} (mastering C code), and \textit{Relatedness} (social interaction in companies).
+    \item \textbf{Self-Determination Theory (SDT):} SDT identifies three basic needs: \textit{Autonomy} (choice of quests), \textit{Competence} (mastering C code), and \textit{Relatedness} (social interaction in companies) \cite{ryan2000self}.
     \item \textbf{ARCS Model:} Developed by Keller, this model focuses on Attention (narrative), Relevance (real-world code), Confidence (clear goals), and Satisfaction (rewards).
 \end{itemize}
 
+\subsubsection{Meaningful Gamification Design}
+Not every reward mechanic improves learning. If points are disconnected from mastery, students may optimize for score rather than understanding. We therefore follow a meaningful-gamification perspective: rewards are attached to quality indicators such as passing hidden tests, solving tasks with fewer retries, or completing collaborative quests \cite{nicholson2013meaningful}. This alignment helps preserve didactic intent while still using motivational affordances.
+
 \subsection{Gamification vs. Traditional Methods}
 Traditional methods often suffer from high latency in feedback and a "punitive" error culture. Errors are seen as failure (grade deduction) rather than a learning opportunity. In a gamified RPG context, a "Game Over" or a failed test case is an invitation to retry. Studies by \cite{lampropoulos2024impact} show that students in gamified courses achieved 14\% higher pass rates and 17\% higher average grades compared to traditional groups.
+
+At the same time, prior research warns against overgeneralization. Effects vary by learner profile, course structure, and mechanic design; some studies report neutral outcomes when gamification is bolted on without curricular integration \cite{dicheva2015gamification}. Our design addresses this by embedding game mechanics directly into the programming workflow itself (quest start, code submission, feedback, revision, completion).
 
 \section{State of the Art: Analysis of Existing Platforms}
 A review of current tools reveals specific strengths and weaknesses in the context of higher education.
 
 \subsection{Block-based Environments}
-\textit{Scratch} is the industry standard for k-12. It avoids syntax errors through drag-and-drop blocks. While effective for teaching logic, it is often viewed as overly simplistic by university students. Furthermore, it abstracts away critical low-level concepts like memory management or data types, which are necessary for professional engineering.
+\textit{Scratch} is the industry standard for k-12 and avoids syntax errors through drag-and-drop blocks. While effective for teaching logic, it is often viewed as overly simplistic by university students and abstracts away low-level concerns \cite{montiel2021scratch,wen2023scratch}. For our target cohort, this abstraction reduces friction but can limit transfer to systems-oriented programming tasks.
 
 \subsection{Puzzle and Logic Games}
-Games like \textit{Lightbot} teach algorithmic thinking through spatial puzzles. They are highly engaging but stay too abstract. They lack the transition to text-based coding and authentic development workflows.
+Games like \textit{Lightbot} teach algorithmic thinking through spatial puzzles. They are highly engaging but remain abstract and rarely expose learners to authentic compilation, debugging, and testing workflows. As a result, transfer from puzzle mastery to practical software tasks is not guaranteed \cite{yallihep2019mobile}.
 
 \subsection{Code Adventure Games}
-\textit{CodeCombat} and \textit{CheckiO} use real code (Python/JS) to control characters in a story. While successful, these platforms often situate programming tasks primarily within a game environment, which may hinder the transfer of skills to local development environments. Our approach focuses on C to provide a "harder" academic challenge suitable for computer science majors.
+\textit{CodeCombat} and \textit{CheckiO} use real code (Python/JS) to control characters in a story. While successful, these platforms often situate programming tasks primarily within a game environment, which may hinder transfer to local development environments. Our approach focuses on C to provide a stronger systems-oriented challenge suitable for computer science majors \cite{kroustalli2021codecombat}.
 
 \subsection{Online Code Judges}
-\textit{LeetCode} and \textit{HackerRank} are high-performance tools for competitive programming. They offer immediate feedback but lack narrative context. For many beginners, these platforms feel like "dry" testing environments rather than motivating learning spaces.
+\textit{LeetCode} and \textit{HackerRank} are high-performance tools for competitive programming. They offer immediate feedback but little narrative framing. For many beginners, these platforms feel like "dry" testing environments rather than motivating learning spaces. Our concept keeps judge-style rigor but embeds tasks in a persistent world with social and narrative context \cite{hua2020onlinejudge}.
 
 \section{Conceptual Design of the Learning Game}
 \subsection{Target Group and Learning Goals}
@@ -104,6 +117,13 @@ The game targets second- or third-semester students who have already completed a
     \item \textbf{Low-Level Understanding:} Mastery of pointers, structs, and manual memory management in C.
 \end{itemize}
 
+This target profile is intentional: the game is designed for reinforcement, not first exposure. Students already know core syntax and can therefore invest cognitive capacity in decomposition, test design, and optimization. The quest sequence is structured to repeatedly exercise these higher-order skills while keeping each individual challenge bounded.
+
+\subsection{Programming Language Choice: C as Primary Track}
+Selecting the learning language is a strategic decision. Python lowers entry barriers and often improves early success rates in introductory settings \cite{wainer2018pythonc}. However, for learners beyond the very first semester, C provides pedagogical advantages by exposing memory layout, pointer semantics, and explicit resource management \cite{balreira2022pythonc}.
+
+Our curriculum therefore uses C as the default track, with optional Python support for comparative tasks in future iterations. The objective is not language preference, but depth of mental models: learners should understand why an algorithm behaves as observed at runtime, not only that it passes tests. This aligns with the project goal of reinforcing foundational systems thinking.
+
 \subsection{The Zelda Metaphor and Movement}
 We chose a 2D top-down pixel-art style, inspired by \textit{The Legend of Zelda}. This aesthetic is nostalgic, accessible, and reduces cognitive load compared to complex 3D environments.
 \begin{itemize}
@@ -111,6 +131,8 @@ We chose a 2D top-down pixel-art style, inspired by \textit{The Legend of Zelda}
     \item \textbf{Interactions:} NPCs act as mentors or "Quest Givers."
     \item \textbf{Contextualization:} Coding tasks are presented as "rebuilding broken bridges" or "deciphering ancient scrolls."
 \end{itemize}
+
+The movement layer is not cosmetic; it is the interface for didactic sequencing. Quests are spatially distributed, creating a natural progression from introductory to advanced regions. Narrative framing has been associated with higher perceived relevance and immersion in learning games \cite{jarrah2024storytelling}, while nostalgic aesthetics can lower affective barriers for some learners \cite{makai2018nostalgia}.
 
 \subsection{Socio-Economic Ecosystem}
 The game features a meta-layer to ensure long-term persistence:
@@ -120,6 +142,8 @@ The game features a meta-layer to ensure long-term persistence:
     \item \textbf{Properties:} Companies can buy "Offices" or "Labs" in the game world, providing a sense of ownership and social status.
     \item \textbf{Social Feed:} A real-time activity feed shows achievements of friends, fostering a healthy sense of community.
 \end{itemize}
+
+To avoid purely extrinsic behavior, the economy is constrained by educational guardrails: rewards are tied to verified submissions, repeated low-value grinding can be dampened, and collaborative achievements are prioritized over raw leaderboard chasing. This balances competition and inclusion, consistent with findings on social comparison and reward design in educational systems \cite{sosnovsky2020socialcomparison,park2021leaderboard}.
 
 \section{Technical Implementation}
 \subsection{System Architecture}
@@ -131,8 +155,12 @@ The prototype utilizes a distributed, multi-tier architecture:
     \item \textbf{Docker Runner Service:} An isolated environment for safe code execution.
 \end{enumerate}
 
+The architecture follows established client--server patterns used in serious games \cite{khan2010clientserver}. Unity handles interaction and rendering, while Node.js/Express exposes REST endpoints for quests, submissions, economy operations, and social features. Real-time notifications (e.g., job completion, feed updates) are delivered via SSE, which reduces complexity compared to full bidirectional channels for this use case \cite{torre2019sse}.
+
 \subsection{Backend and Security Design}
 The Node.js server acts as the central coordinator. For security, we utilize JSON Web Tokens (JWT) for authentication. Every interaction, from buying an item to starting a quest, is validated against the user's role and state. The database schema includes specialized tables for \texttt{users}, \texttt{quests}, \texttt{transactions}, \texttt{companies}, and \texttt{feed\_items}.
+
+Authorization is enforced at multiple layers. API middleware validates tokens and role constraints, while Row-Level Security in PostgreSQL limits data access at the storage layer. This defense-in-depth approach reduces blast radius in case of endpoint misconfiguration. The modular backend structure also simplifies testing and maintenance as feature sets grow \cite{chaplia2023node}.
 
 \subsection{The Dockerized Code Runner}
 Executing arbitrary user code (especially in C) is a massive security risk. We implemented a "Sandbox" model:
@@ -142,6 +170,13 @@ Executing arbitrary user code (especially in C) is a massive security risk. We i
     \item \textbf{Redis Queue:} To handle spikes in submissions, jobs are pushed to a Redis queue and processed by a pool of "pre-warmed" containers.
     \item \textbf{Feedback Loop:} The runner captures \texttt{stdout}, \texttt{stderr}, and exit codes, sending them back to Unity via Server-Sent Events (SSE).
 \end{itemize}
+
+Containerization is supported by prior security research as an effective baseline for isolating untrusted workloads \cite{combe2016docker,spacek2015docker}. In our runner flow, submissions are converted into queue jobs, executed with strict CPU/RAM/time limits, and then mapped to deterministic verdicts (\texttt{accepted}, \texttt{wrong answer}, \texttt{time limit exceeded}, \texttt{runtime error}). This provides both operational safety and pedagogically useful feedback granularity.
+
+\subsection{Quest Lifecycle and Data Flow}
+Each quest follows a consistent state machine: \texttt{available} $\rightarrow$ \texttt{started} $\rightarrow$ \texttt{submitted} $\rightarrow$ \texttt{validated} $\rightarrow$ \texttt{completed/failed}. This explicit lifecycle enables reliable progress tracking and simplifies analytics.
+
+From a data perspective, the client requests quest metadata, submits source code, and receives asynchronous status updates. The backend stores attempts and verdicts, updates progression metrics, and emits feed events when milestones are reached. This makes it possible to audit learning trajectories (e.g., retries per quest, time-to-success) and later correlate them with learning outcomes in formal evaluation.
 
 \subsection{Unity Movement and Animation System}
 Technical excellence in the frontend is key for immersion.
@@ -160,8 +195,12 @@ The judge was tested with several scenarios:
     \item \textbf{Syntax Parsing:} Compiler errors from \texttt{gcc} were correctly passed through to the game terminal.
 \end{itemize}
 
+In addition to these baseline checks, robust online assessment requires diverse test suites per task, including edge conditions and hidden cases. Prior online-judge research suggests that broader case coverage improves reliability and discourages overfitting to visible examples \cite{li2020faultlocalization,latih2017pc2}. Our validation strategy therefore treats test design as a first-class didactic artifact, not merely a technical detail.
+
 \subsection{Movement and Interaction Tests}
 We validated the interaction triggers. An NPC only opens the "Quest Menu" when the player is within a specific 2D trigger zone and presses the interaction key. This prevents overlapping UI elements and ensures a clean user experience.
+
+We additionally verified animation transition stability (Idle/Walk), dead-zone handling for noisy input, and collision consistency across scene boundaries. These details matter because interaction friction can directly reduce task engagement and distort educational outcomes during user studies.
 
 \section{Proposed Empirical Evaluation}
 To confirm the pedagogical impact, we propose a longitudinal study design.
@@ -170,11 +209,35 @@ A cohort of 60 bachelor students will be split into an \textit{Experimental Grou
 \begin{itemize}
     \item \textbf{Period:} 6 weeks of intervention.
     \item \textbf{Topics:} Identical for both groups (Arrays, Pointers, Structs, Linked Lists).
-    \item \textbf{Metries:} Pre- and Post-tests for strategic knowledge, time-on-task, and completion rates.
+    \item \textbf{Metrics:} Pre- and post-tests for strategic knowledge, time-on-task, and completion rates.
 \end{itemize}
+
+To improve internal validity, both groups should receive the same instructional content, assignment workload, and time budget; only the delivery format differs. Random assignment is preferred, and effect sizes should be reported in addition to significance tests. This aligns with methodological recommendations for evaluating motivational interventions in education \cite{treiblmaier2020moderator}.
+
+\subsection{Evaluation Dimensions and Instruments}
+The evaluation should combine technical, behavioral, and learning-focused measures:
+\begin{itemize}
+    \item \textbf{Learning Outcomes:} Difference between pre- and post-test scores, plus transfer tasks that require applying concepts to unseen problems.
+    \item \textbf{Engagement:} Number of completed quests, voluntary extra attempts, active time, and return frequency.
+    \item \textbf{Motivation:} Post-intervention surveys and qualitative feedback on autonomy, competence, and enjoyment.
+    \item \textbf{System Quality:} Failure rates, average runner latency, and usability observations.
+\end{itemize}
+
+Comparable empirical studies have reported positive effects for gamified programming interventions on both engagement and performance, especially when narrative progression and immediate feedback are combined \cite{ibanez2014casestudy,rojaslopez2019engagement,marin2018benefits,costa2023gameconcepts}.
 
 \subsection{Didactic Importance of Quests}
 The quest structure provides narrative framing. Instead of "Write a function for Bubble Sort," the quest is "Organize the Kingdom's Library." This contextualization makes the problem-solving process feel meaningful. Qualitative feedback from previous studies \cite{flores2023quest} suggests that students describe such courses as "gripping" and "fesselnd."
+
+From a didactic standpoint, quests operationalize three mechanisms simultaneously: explicit goals, constrained challenge, and immediate feedback loops. Learners know what success means, can iterate quickly, and observe progression over time. This can reduce frustration associated with abstract or decontextualized problem sheets, while preserving rigorous assessment through automated testing.
+
+\section{Limitations and Threats to Validity}
+Despite promising technical results, several limitations must be acknowledged. First, this paper reports a prototype and an evaluation framework, not a completed longitudinal classroom deployment. External validity therefore depends on future studies across institutions and cohorts.
+
+Second, motivation effects can be novelty-driven. Students may initially engage more due to the game format, with attenuation over time. Long-term retention measurements and follow-up testing are required to distinguish temporary engagement spikes from durable learning gains \cite{buckley2016motivation,cuervocely2022motivation}.
+
+Third, there are potential selection and implementation biases. Learners already interested in games may respond differently from those preferring conventional study formats. Instructor guidance quality and quest calibration can further moderate outcomes. To mitigate these risks, future studies should pre-register hypotheses, document implementation fidelity, and include subgroup analyses.
+
+Finally, infrastructure assumptions (stable internet access, compatible devices, and backend capacity) may influence adoption in school contexts. Technical robustness and pedagogical value must therefore be considered jointly when transferring the approach from university pilots to broader educational settings.
 
 \section{Conclusion and Future Work}
 \subsection{Summary of Results}
