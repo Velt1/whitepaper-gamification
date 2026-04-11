@@ -1,6 +1,7 @@
 \documentclass[a4paper, UKenglish, cleveref, autoref, thm-restate]{oasics-v2021}
 % Für OASIcs: Das Paket oasics-v2021 muss im Ordner liegen.
 % Die Optionen für Geometrie, Fonts und Spacing werden von der Klasse verwaltet.
+\hideOASIcs
 
 \bibliographystyle{plainurl}
 
@@ -8,7 +9,7 @@
 
 \titlerunning{Gamification in Programming Education} % Kurztitel für den Header
 \author{Max Fritsche}
-{DHSN Duale Hochschule Sachsen, Staatliche Studienakademie Leipzig, Germany}{s5002242@edu.dhsn.de}{}{ }
+{DHSN Duale Hochschule Sachsen, Staatliche Studienakademie Leipzig, Germany, and Security Robotics D\&S GmbH, Germany}{s5002242@edu.dhsn.de}{}{}
 \author{Alexander Paar}{DHSN Duale Hochschule Sachsen, Staatliche Studienakademie Leipzig, Germany}{alexander.paar@dhsn.de}{}{}
 
 \authorrunning{M. Fritsche and A. Paar}
@@ -23,45 +24,42 @@
 
 \relatedversion{Extended version based on the author's bachelor thesis (2025, DHSN Leipzig).}
 
-\supplementdetails{Software}{The prototype includes infrastructure-dependent components and cannot be publicly released. A demonstration build is available from the authors upon request.}
-
-
+\supplement{Software: The prototype includes infrastructure-dependent components and cannot be publicly released. A demonstration build is available from the authors upon request.}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-The acquisition of programming skills is a notoriously difficult process characterized by high cognitive load, complex abstraction requirements, and significant dropout rates in higher education. Traditional pedagogical approaches often struggle to bridge the gap between abstract syntax and the strategic problem-solving required in software engineering. This paper presents a comprehensive gamified solution: a 2D top-down Role-Playing Game (RPG) inspired by classical adventure games like "The Legend of Zelda," specifically designed to reinforce existing knowledge. We detail the integration of a secure, Docker-based automated code judge within a narrative-driven environment. Key features include a virtual economy, a social "company" system for collaboration, and a curriculum focused on the C programming language to deepen low-level understanding. The paper evaluates the technical robustness of the prototype and proposes an empirical framework to validate the hypothesis that this immersive approach significantly enhances learning productivity, persistence, and student motivation.
+The acquisition of programming skills is a notoriously difficult process characterized by high cognitive load, complex abstraction requirements, and significant dropout rates in higher education. Traditional pedagogical approaches often struggle to bridge the gap between seemingly abstract language syntax and the strategic problem-solving required in software engineering. This paper presents a comprehensive gamified solution: a 2D top-down Role-Playing Game (RPG) inspired by classical adventure games such as \textit{The Legend of Zelda} \cite{nintendo1986zelda}, specifically designed to reinforce existing knowledge. We detail the integration of a secure, Docker-based automated code judge within a narrative-driven environment. Key features include a virtual economy, a social "company" system for collaboration, and a curriculum focused on the C programming language to deepen low-level understanding. The paper evaluates the technical robustness of the prototype and proposes an empirical framework to validate the hypothesis that this immersive approach significantly enhances learning productivity, persistence, and student motivation.
 \end{abstract}
 
 \section{Introduction}
-Programming education is facing a global crisis of engagement. As software becomes the backbone of modern infrastructure, the demand for developers grows, yet introductory computer science (CS1) courses report failure rates as high as 30-50\%. The primary challenge lies not just in learning syntax, but in developing the strategic knowledge required to decompose complex problems and debug logic under pressure.
-
-Current educational models often rely on "frontal" instruction followed by isolated, context-free exercises. These methods lack the immediate, iterative feedback loops that modern learners require to stay motivated. This paper argues that Gamification, the application of game design elements to non-game contexts, can provide a solution by fostering a "Flow" state where the challenge of coding is matched by an immersive narrative and immediate rewards.
+Programming education is facing a global crisis of engagement. As software becomes the backbone of modern infrastructure, the demand for developers grows, yet introductory computer science (CS1) courses report failure rates as high as 30-50\% \cite{singh2022challenges,medeiros2019review}. The primary challenge lies not just in learning syntax, but in developing the strategic knowledge required to decompose complex problems and debug logic under pressure.
+Current educational models often rely on lecture-based instruction followed by isolated, context-free exercises. These methods lack the immediate, iterative feedback loops that modern learners require to stay motivated. This paper argues that Gamification, the application of game design elements to non-game contexts, can provide a solution by fostering a "Flow" state where the challenge of coding is matched by an immersive narrative and immediate rewards.
 
 \subsection{Challenges in Programming Education}
-As noted by \cite{singh2022challenges,medeiros2019review}, beginners struggle with three distinct levels of knowledge:
+As noted by Singh~\cite{singh2022challenges} and Medeiros et al.~\cite{medeiros2019review}, beginners struggle with three distinct levels of knowledge:
 \begin{enumerate}
     \item \textbf{Syntactic Knowledge:} The specific rules and grammar of the language (e.g., semicolons, brackets).
-    \item \textbf{Conceptual Knowledge:} Understanding abstract structures like loops, recursion, or pointers.
-    \item \textbf{Strategic Knowledge:} The ability to apply concepts to solve novel problems, plan algorithms, and systematically debug.
+    \item \textbf{Conceptual Knowledge:} Understanding abstract structures such as loops, recursion, or pointers.
+    \item \textbf{Strategic Knowledge:} The ability to apply concepts to solve novel problems, plan algorithms, and debug systematically.
 \end{enumerate}
 
 \subsubsection{Cognitive and Subject-Specific Hurdles}
-Students frequently struggle with the step from conceptual knowledge to strategic application. While a student might understand what a "variable" is in isolation, they often fail to integrate multiple concepts into a functioning program. Syntax errors, which lead to frustrating "trial-and-error" loops, often overshadow the actual logic of the problem. \cite{medeiros2019review} emphasizes that the high degree of abstraction, such as memory addresses and control structures, often lacks analogies in everyday life, making the initial learning curve exceptionally steep.
+Students frequently struggle with the step from conceptual knowledge to strategic application. While a student might understand what a "variable" is in isolation, they often fail to integrate multiple concepts into a functioning program. Syntax errors, which lead to frustrating "trial-and-error" loops, often overshadow the actual logic of the problem. Medeiros et al.~\cite{medeiros2019review} emphasize that the high degree of abstraction, such as memory addresses and control structures, often lacks analogies in everyday life, making the initial learning curve exceptionally steep.
 
 \subsubsection{Behavioral and Emotional Factors}
-Beyond cognitive barriers, behavioral factors like self-efficacy and time management play a crucial role. Programming is often perceived as "inherently difficult," which leads to early demotivation. In large cohorts, individual support is limited, and students often feel abandoned when facing complex software setups or cryptic compiler errors. This lack of "psychological safety" inhibits exploration and experimentation.
+Beyond cognitive barriers, behavioral factors such as self-efficacy and time management play a crucial role. Programming is often perceived as "inherently difficult," which leads to early demotivation. In large cohorts, individual support is limited, and students often feel abandoned when facing complex software setups or cryptic compiler errors. This lack of "psychological safety" inhibits exploration and experimentation.
 
 At the classroom level, these barriers are amplified by feedback latency. In many traditional settings, learners only discover misconceptions after delayed grading cycles, which reduces opportunities for iterative correction and weakens persistence. Empirical work on programming pedagogy therefore emphasizes rapid, formative feedback and repeated low-stakes practice as central design requirements for CS learning environments \cite{marwan2022feedback,hattie2007power}.
 
 \subsection{Hypothesis of the Study}
-The central hypothesis of this work is: \textit{"The gamification of programming education can be successfully and effectively implemented in the form of a Zelda-like RPG to increase learning productivity and motivation."} To validate this, we developed a prototype that focuses on the reinforcement of existing skills through practical, narrative-embedded exercises.
+The hypothesis of this work is that \textit{the gamification of programming education can be successfully and effectively implemented in the form of a Zelda-like RPG to increase learning productivity and motivation}. To evaluate this hypothesis, we developed a prototype that focuses on the reinforcement of existing skills through practical, narrative-embedded exercises.
 
 \section{Theoretical Foundations}
 \subsection{The Importance of Practical Exercise}
-Programming is a craft that requires active participation. According to the constructivist principle of "Learning by Doing," knowledge is constructed through experience. \cite{iftikhar2022practice} states that "Learning to code is a skill that can only be developed by virtue of practice." Passive consumption of lectures or textbooks provides the vocabulary, but only the application in diverse scenarios builds actual competence.
+Programming is a craft that requires active participation. According to the constructivist principle of "Learning by Doing," knowledge is constructed through experience. Iftikhar et al.~\cite{iftikhar2022practice} state that "Learning to code is a skill that can only be developed by virtue of practice." Passive consumption of lectures or textbooks provides the vocabulary, but only the application in various scenarios builds actual competence.
 
 Practice is particularly important for transitioning from conceptual to strategic knowledge. Students may know what loops, arrays, or pointers are, but still struggle to design complete solutions, test edge cases, and debug systematically \cite{medeiros2019review}. Structured repetition across varied tasks strengthens transfer: learners recognize recurring patterns and become faster at selecting and adapting solution strategies.
 
@@ -89,7 +87,7 @@ We apply two major frameworks to ensure deep engagement:
 Not every reward mechanic improves learning. If points are disconnected from mastery, students may optimize for score rather than understanding. We therefore follow a meaningful-gamification perspective: rewards are attached to quality indicators such as passing hidden tests, solving tasks with fewer retries, or completing collaborative quests \cite{nicholson2013meaningful}. This alignment helps preserve didactic intent while still using motivational affordances.
 
 \subsection{Gamification vs. Traditional Methods}
-Traditional methods often suffer from high latency in feedback and a "punitive" error culture. Errors are seen as failure (grade deduction) rather than a learning opportunity. In a gamified RPG context, a "Game Over" or a failed test case is an invitation to retry. Studies by \cite{lampropoulos2024impact} show that students in gamified courses achieved 14\% higher pass rates and 17\% higher average grades compared to traditional groups.
+Traditional methods often suffer from high latency in feedback and a "punitive" error culture. Errors are seen as failure (grade deduction) rather than a learning opportunity. In a gamified RPG context, a "Game Over" or a failed test case is an invitation to retry. Lampropoulos et al.~\cite{lampropoulos2024impact} show that students in gamified courses achieved 14\% higher pass rates and 17\% higher average grades compared to traditional groups.
 
 At the same time, prior research warns against overgeneralization. Effects vary by learner profile, course structure, and mechanic design; some studies report neutral outcomes when gamification is bolted on without curricular integration \cite{dicheva2015gamification}. Our design addresses this by embedding game mechanics directly into the programming workflow itself (quest start, code submission, feedback, revision, completion).
 
@@ -100,7 +98,7 @@ A review of current tools reveals specific strengths and weaknesses in the conte
 \textit{Scratch} is the industry standard for k-12 and avoids syntax errors through drag-and-drop blocks. While effective for teaching logic, it is often viewed as overly simplistic by university students and abstracts away low-level concerns \cite{montiel2021scratch,wen2023scratch}. For our target cohort, this abstraction reduces friction but can limit transfer to systems-oriented programming tasks.
 
 \subsection{Puzzle and Logic Games}
-Games like \textit{Lightbot} teach algorithmic thinking through spatial puzzles. They are highly engaging but remain abstract and rarely expose learners to authentic compilation, debugging, and testing workflows. As a result, transfer from puzzle mastery to practical software tasks is not guaranteed \cite{yallihep2019mobile}.
+Games such as \textit{Lightbot} teach algorithmic thinking through spatial puzzles. They are highly engaging but remain abstract and rarely expose learners to authentic compilation, debugging, and testing workflows. As a result, transfer from puzzle mastery to practical software tasks is not guaranteed \cite{yallihep2019mobile}.
 
 \subsection{Code Adventure Games}
 \textit{CodeCombat} and \textit{CheckiO} use real code (Python/JS) to control characters in a story. While successful, these platforms often situate programming tasks primarily within a game environment, which may hinder transfer to local development environments. Our approach focuses on C to provide a stronger systems-oriented challenge suitable for computer science majors \cite{kroustalli2021codecombat}.
@@ -110,7 +108,7 @@ Games like \textit{Lightbot} teach algorithmic thinking through spatial puzzles.
 
 \section{Conceptual Design of the Learning Game}
 \subsection{Target Group and Learning Goals}
-The game targets second- or third-semester students who have already completed an introductory course. The goals are:
+The game targets second- and third-semester students who have already completed an introductory course. The goals are:
 \begin{itemize}
     \item \textbf{Strategic Thinking:} Solving complex problems through algorithm design.
     \item \textbf{Debugging Competence:} Systematic error identification and correction.
@@ -125,7 +123,7 @@ Selecting the learning language is a strategic decision. Python lowers entry bar
 Our curriculum therefore uses C as the default track, with optional Python support for comparative tasks in future iterations. The objective is not language preference, but depth of mental models: learners should understand why an algorithm behaves as observed at runtime, not only that it passes tests. This aligns with the project goal of reinforcing foundational systems thinking.
 
 \subsection{The Zelda Metaphor and Movement}
-We chose a 2D top-down pixel-art style, inspired by \textit{The Legend of Zelda}. This aesthetic is nostalgic, accessible, and reduces cognitive load compared to complex 3D environments.
+We chose a 2D top-down pixel-art style, inspired by \textit{The Legend of Zelda} \cite{nintendo1986zelda}. This aesthetic is nostalgic, accessible, and reduces cognitive load compared to complex 3D environments.
 \begin{itemize}
     \item \textbf{Exploration:} Players move through a spatial world, making the learning path tangible.
     \item \textbf{Interactions:} NPCs act as mentors or "Quest Givers."
@@ -143,7 +141,7 @@ The game features a meta-layer to ensure long-term persistence:
     \item \textbf{Social Feed:} A real-time activity feed shows achievements of friends, fostering a healthy sense of community.
 \end{itemize}
 
-To avoid purely extrinsic behavior, the economy is constrained by educational guardrails: rewards are tied to verified submissions, repeated low-value grinding can be dampened, and collaborative achievements are prioritized over raw leaderboard chasing. This balances competition and inclusion, consistent with findings on social comparison and reward design in educational systems \cite{sosnovsky2020socialcomparison,park2021leaderboard}.
+To avoid purely extrinsic behavior, the economy is constrained by educational guardrails: rewards are tied to verified submissions, repeated low-value grinding is dampened, and collaborative achievements are prioritized over raw leaderboard chasing. This balances competition and inclusion, consistent with findings on social comparison and reward design in educational systems \cite{sosnovsky2020socialcomparison,park2021leaderboard}.
 
 \section{Technical Implementation}
 \subsection{System Architecture}
@@ -155,7 +153,7 @@ The prototype utilizes a distributed, multi-tier architecture:
     \item \textbf{Docker Runner Service:} An isolated environment for safe code execution.
 \end{enumerate}
 
-The architecture follows established client--server patterns used in serious games \cite{khan2010clientserver}. Unity handles interaction and rendering, while Node.js/Express exposes REST endpoints for quests, submissions, economy operations, and social features. Real-time notifications (e.g., job completion, feed updates) are delivered via SSE, which reduces complexity compared to full bidirectional channels for this use case \cite{torre2019sse}.
+The architecture follows established client--server patterns used in serious games \cite{khan2010clientserver}. Unity handles interaction and rendering, while Node.js/Express exposes REST endpoints for quests, submissions, economy operations, and social features. Real-time notifications (e.g., job completion, feed updates) are delivered via Server-Sent Events (SSE), which reduces complexity compared to full bidirectional channels for this use case \cite{torre2019sse}.
 
 \subsection{Backend and Security Design}
 The Node.js server acts as the central coordinator. For security, we utilize JSON Web Tokens (JWT) for authentication. Every interaction, from buying an item to starting a quest, is validated against the user's role and state. The database schema includes specialized tables for \texttt{users}, \texttt{quests}, \texttt{transactions}, \texttt{companies}, and \texttt{feed\_items}.
@@ -205,7 +203,7 @@ We additionally verified animation transition stability (Idle/Walk), dead-zone h
 \section{Proposed Empirical Evaluation}
 To confirm the pedagogical impact, we propose a longitudinal study design.
 \subsection{Study Design}
-A cohort of 60 bachelor students will be split into an \textit{Experimental Group} (RPG) and a \textit{Control Group} (Traditional).
+A cohort of 60 bachelor's students will be split into an \textit{Experimental Group} (RPG) and a \textit{Control Group} (Traditional).
 \begin{itemize}
     \item \textbf{Period:} 6 weeks of intervention.
     \item \textbf{Topics:} Identical for both groups (Arrays, Pointers, Structs, Linked Lists).
@@ -222,6 +220,8 @@ The evaluation should combine technical, behavioral, and learning-focused measur
     \item \textbf{Motivation:} Post-intervention surveys and qualitative feedback on autonomy, competence, and enjoyment.
     \item \textbf{System Quality:} Failure rates, average runner latency, and usability observations.
 \end{itemize}
+
+This multidimensional instrument set is aligned with prior evaluation designs in gamified programming education \cite{figueiredo2020motivation,ibanez2014casestudy,hellin2023engagement}.
 
 Comparable empirical studies have reported positive effects for gamified programming interventions on both engagement and performance, especially when narrative progression and immediate feedback are combined \cite{ibanez2014casestudy,rojaslopez2019engagement,marin2018benefits,costa2023gameconcepts}.
 
@@ -241,7 +241,7 @@ Finally, infrastructure assumptions (stable internet access, compatible devices,
 
 \section{Conclusion and Future Work}
 \subsection{Summary of Results}
-The "C-Zelda" prototype demonstrates that gamification can be successfully integrated into the rigorous context of university programming education. Technically, we have shown that Docker-based code execution is safe and responsive. Pedagogically, the combination of narrative exploration and immediate feedback addresses the primary pain points of beginners: demotivation and the struggle with abstraction.
+The "CodeQuest RPG" prototype demonstrates that gamification can be successfully integrated into the rigorous context of university programming education. Technically, we have shown that Docker-based code execution is safe and responsive. Pedagogically, the combination of narrative exploration and immediate feedback addresses the primary pain points of beginners: demotivation and the struggle with abstraction.
 
 \subsection{Outlook and School Transfer}
 For future development, we envision:
